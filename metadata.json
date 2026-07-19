@@ -1,0 +1,6 @@
+{
+  "name": "Sound Bridges Spelling Practice",
+  "description": "An accessible spelling and word practice application for kids featuring text-to-speech, syllable sound bridges, forgiving grading, customizable layouts, and positive effort tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

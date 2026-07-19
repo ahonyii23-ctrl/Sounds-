@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-lexend: "Lexend", sans-serif;
+  --font-atkinson: "Atkinson Hyperlegible", sans-serif;
+  --font-fredoka: "Fredoka", sans-serif;
+}
+
+/* Custom background animations and extra styles */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.02); }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 8s infinite ease-in-out;
+}
+
+/* Scrollbar styling for kids */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 9999px;
+}
+
