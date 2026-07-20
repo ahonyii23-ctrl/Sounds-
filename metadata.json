@@ -1,6 +1,6 @@
 {
-  "name": "Sound Bridges Spelling Practice",
-  "description": "An accessible spelling and word practice application for kids featuring text-to-speech, syllable sound bridges, forgiving grading, customizable layouts, and positive effort tracking.",
+  "name": "Steelworlds",
+  "description": "An accessible spelling, syllable practice, and dyslexic-friendly reading application featuring text-to-speech, syllable bridges, focus tools, and confidence building rewards.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

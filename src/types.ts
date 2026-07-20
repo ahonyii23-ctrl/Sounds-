@@ -7,15 +7,16 @@ export interface SpellingWord {
   sentence: string;
   hint: string;
   emoji: string;
+  imageUrl?: string;
 }
 
-export type BackgroundTint = 'cream' | 'mint' | 'sky' | 'lavender' | 'buttercup';
+export type BackgroundTint = 'cream' | 'mint' | 'sky' | 'lavender' | 'buttercup' | 'forge';
 
 export type TextSize = 'md' | 'lg' | 'xl' | 'huge';
 
 export type LetterSpacing = 'normal' | 'wide' | 'extra';
 
-export type SelectedFont = 'lexend' | 'atkinson' | 'fredoka';
+export type SelectedFont = 'lexend' | 'atkinson' | 'fredoka' | 'dyslexic';
 
 export interface UserSettings {
   tint: BackgroundTint;
@@ -46,6 +47,16 @@ export interface UserStats {
   wordsPerfect: number;
   streakDays: number;
   lastActiveDate: string | null;
+}
+
+export interface UserProfile {
+  studentName: string;
+  avatar: string;
+  focusProfile: 'standard' | 'dyslexia_helper' | 'high_contrast' | 'auditory_focus';
+  dailyWordGoal: number;
+  notes: string;
+  age?: string;
+  sticker?: string;
 }
 
 export interface GradingResult {

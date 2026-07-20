@@ -1,8 +1,6 @@
 import React from 'react';
 import { UserStats, WordProgress, SpellingWord, UserSettings } from '../types';
-import { TINT_PRESETS } from '../data';
 import { Award, Star, Flame, BookOpen, RefreshCw, Sparkles, CheckCircle2 } from 'lucide-react';
-import { motion } from 'motion/react';
 import { GmailDashboard } from './GmailDashboard';
 
 interface ProgressViewProps {
@@ -31,8 +29,6 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   wordsList,
   onWordsImported,
 }) => {
-  const activeTint = TINT_PRESETS[settings.tint];
-
   // Derive achievements
   const badges: Badge[] = [
     {
@@ -93,14 +89,14 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
   return (
     <div className="space-y-8">
       {/* Celebration Header */}
-      <div className="text-center py-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-3xl p-6 border-2 border-yellow-200">
+      <div className="text-center py-4 bg-gradient-to-r from-amber-950/40 to-orange-950/40 rounded-3xl p-6 border-2 border-amber-500/30 text-slate-100 shadow-lg">
         <div className="flex justify-center mb-2">
-          <Award size={48} className="text-yellow-500 animate-bounce" />
+          <Award size={48} className="text-amber-400 animate-bounce" />
         </div>
-        <h2 className="text-2xl md:text-3xl font-extrabold font-fredoka text-yellow-800">
-          Your Creative Journey! 🌈
+        <h2 className="text-2xl md:text-3xl font-black font-fredoka text-amber-400">
+          Your Creative Journey! 🛠️
         </h2>
-        <p className="text-sm text-yellow-700/90 mt-1 max-w-lg mx-auto">
+        <p className="text-sm text-slate-300 mt-1 max-w-lg mx-auto">
           Every spelling attempt makes your brain stronger. Look at how much amazing effort you have put in!
         </p>
       </div>
@@ -108,57 +104,57 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
       {/* Positive Stats Dashboard */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Star counter */}
-        <div className="p-4 rounded-2xl bg-amber-50 border-2 border-amber-200 flex flex-col items-center justify-center text-center">
-          <div className="p-2 bg-amber-100 rounded-full text-amber-600 mb-1.5">
+        <div className="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 flex flex-col items-center justify-center text-center">
+          <div className="p-2 bg-slate-950 rounded-full text-amber-400 mb-1.5 border border-slate-800">
             <Star size={24} fill="currentColor" />
           </div>
-          <span className="text-2xl md:text-3xl font-black font-fredoka text-amber-700">
+          <span className="text-2xl md:text-3xl font-black font-fredoka text-amber-400">
             {stats.totalStars}
           </span>
-          <span className="text-xs font-bold text-amber-800/80">Stars Awarded</span>
+          <span className="text-xs font-bold text-slate-400">Stars Awarded</span>
         </div>
 
         {/* Words Practiced */}
-        <div className="p-4 rounded-2xl bg-blue-50 border-2 border-blue-200 flex flex-col items-center justify-center text-center">
-          <div className="p-2 bg-blue-100 rounded-full text-blue-600 mb-1.5">
+        <div className="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 flex flex-col items-center justify-center text-center">
+          <div className="p-2 bg-slate-950 rounded-full text-blue-400 mb-1.5 border border-slate-800">
             <BookOpen size={24} />
           </div>
-          <span className="text-2xl md:text-3xl font-black font-fredoka text-blue-700">
+          <span className="text-2xl md:text-3xl font-black font-fredoka text-blue-400">
             {progressList.length} / {wordsList.length}
           </span>
-          <span className="text-xs font-bold text-blue-800/80">Words Practiced</span>
+          <span className="text-xs font-bold text-slate-400">Words Practiced</span>
         </div>
 
         {/* Perfect Spellings */}
-        <div className="p-4 rounded-2xl bg-emerald-50 border-2 border-emerald-200 flex flex-col items-center justify-center text-center">
-          <div className="p-2 bg-emerald-100 rounded-full text-emerald-600 mb-1.5">
+        <div className="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 flex flex-col items-center justify-center text-center">
+          <div className="p-2 bg-slate-950 rounded-full text-emerald-400 mb-1.5 border border-slate-800">
             <CheckCircle2 size={24} />
           </div>
-          <span className="text-2xl md:text-3xl font-black font-fredoka text-emerald-700">
+          <span className="text-2xl md:text-3xl font-black font-fredoka text-emerald-400">
             {stats.wordsPerfect}
           </span>
-          <span className="text-xs font-bold text-emerald-800/80">Perfect Hits</span>
+          <span className="text-xs font-bold text-slate-400">Perfect Hits</span>
         </div>
 
         {/* Current Streak */}
-        <div className="p-4 rounded-2xl bg-rose-50 border-2 border-rose-200 flex flex-col items-center justify-center text-center">
-          <div className="p-2 bg-rose-100 rounded-full text-rose-500 mb-1.5">
+        <div className="p-4 rounded-2xl bg-slate-900 border-2 border-slate-800 flex flex-col items-center justify-center text-center">
+          <div className="p-2 bg-slate-950 rounded-full text-rose-400 mb-1.5 border border-slate-800">
             <Flame size={24} fill="currentColor" />
           </div>
-          <span className="text-2xl md:text-3xl font-black font-fredoka text-rose-700">
+          <span className="text-2xl md:text-3xl font-black font-fredoka text-rose-400">
             {stats.streakDays}
           </span>
-          <span className="text-xs font-bold text-rose-800/80">Day Streak</span>
+          <span className="text-xs font-bold text-slate-400">Day Streak</span>
         </div>
       </div>
 
       {/* Badges Section */}
-      <div className={`p-6 rounded-3xl border-2 ${activeTint.cardClass} ${activeTint.textClass}`}>
+      <div className="p-6 rounded-3xl border-2 bg-slate-900 border-slate-700/80 text-slate-100 shadow-xl">
         <div className="flex items-center gap-2 mb-4">
-          <Sparkles size={20} className="text-indigo-500" />
+          <Sparkles size={20} className="text-amber-400" />
           <h3 className="text-xl font-bold font-fredoka">Effort Badges ({unlockedBadgesCount}/{badges.length})</h3>
         </div>
-        <p className="text-xs mb-6 opacity-80 leading-relaxed">
+        <p className="text-xs mb-6 text-slate-400 leading-relaxed">
           Unlock badges as you practice, make attempts, and spell correct words.
         </p>
 
@@ -168,29 +164,29 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
               key={badge.id}
               className={`p-4 rounded-2xl border-2 flex items-center gap-4 transition-all duration-300 ${
                 badge.isUnlocked
-                  ? 'border-emerald-200 bg-emerald-50/20 opacity-100 shadow-sm'
-                  : 'border-gray-200 bg-gray-50/50 opacity-60'
+                  ? 'border-emerald-500/30 bg-emerald-950/25 opacity-100 shadow-sm'
+                  : 'border-slate-850 bg-slate-950/50 opacity-60'
               }`}
               id={`badge-card-${badge.id}`}
             >
-              <div className="text-3xl p-2.5 bg-white rounded-xl shadow-inner select-none">
+              <div className="text-3xl p-2.5 bg-slate-950 border border-slate-850 rounded-xl shadow-inner select-none">
                 {badge.isUnlocked ? badge.emoji : '🔒'}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-1.5">
-                  <span className={`text-sm font-bold ${badge.isUnlocked ? 'text-gray-900' : 'text-gray-500'}`}>
+                  <span className={`text-sm font-bold ${badge.isUnlocked ? 'text-slate-100' : 'text-slate-500'}`}>
                     {badge.name}
                   </span>
                   {badge.isUnlocked && (
-                    <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-100 px-1.5 py-0.2 rounded-full uppercase">
+                    <span className="text-[10px] font-extrabold text-emerald-400 bg-emerald-950 px-1.5 py-0.2 rounded-full uppercase border border-emerald-800/30">
                       Unlocked
                     </span>
                   )}
                 </div>
-                <p className="text-[11px] text-gray-500 line-clamp-1 leading-normal">
+                <p className="text-[11px] text-slate-400 line-clamp-1 leading-normal">
                   {badge.description}
                 </p>
-                <span className="text-[10px] font-semibold text-gray-400 mt-1 block">
+                <span className="text-[10px] font-semibold text-slate-500 mt-1 block">
                   Req: {badge.requirement}
                 </span>
               </div>
@@ -200,18 +196,18 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
       </div>
 
       {/* Practiced Words Log */}
-      <div className={`p-6 rounded-3xl border-2 ${activeTint.cardClass} ${activeTint.textClass}`}>
+      <div className="p-6 rounded-3xl border-2 bg-slate-900 border-slate-700/80 text-slate-100 shadow-xl">
         <h3 className="text-xl font-bold font-fredoka mb-4">Words You've Explored</h3>
 
         {progressList.length === 0 ? (
-          <div className="text-center py-8 text-gray-400">
+          <div className="text-center py-8 text-slate-500">
             <p className="text-sm">No words practiced yet. Let's start spelling to see your logs!</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-gray-200 text-xs font-bold uppercase opacity-70">
+                <tr className="border-b border-slate-800 text-xs font-bold uppercase text-slate-400">
                   <th className="pb-3 pr-2">Word</th>
                   <th className="pb-3 px-2">Level</th>
                   <th className="pb-3 px-2">Best Grade</th>
@@ -219,18 +215,27 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                   <th className="pb-3 pl-2 text-right">Try Again</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-100">
+              <tbody className="divide-y divide-slate-850">
                 {progressList.map((progress) => {
                   const wordData = wordsList.find(w => w.id === progress.wordId);
                   const isPerfect = progress.bestGrade === 'perfect';
                   const isClose = progress.bestGrade === 'close';
 
                   return (
-                    <tr key={progress.wordId} className="group hover:bg-gray-50/50 transition-colors">
+                    <tr key={progress.wordId} className="group hover:bg-slate-950/50 transition-colors">
                       {/* Word text */}
                       <td className="py-3.5 pr-2">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-lg select-none">{wordData?.emoji || '📝'}</span>
+                        <div className="flex items-center gap-2">
+                          {wordData?.imageUrl ? (
+                            <img
+                              src={wordData.imageUrl}
+                              alt={progress.word}
+                              className="w-6 h-6 rounded-lg object-cover shrink-0 border border-slate-800"
+                              referrerPolicy="no-referrer"
+                            />
+                          ) : (
+                            <span className="text-lg select-none">{wordData?.emoji || '📝'}</span>
+                          )}
                           <span className="font-bold text-base capitalize" style={{ fontFamily: settings.font === 'lexend' ? 'Lexend' : settings.font === 'atkinson' ? 'Atkinson Hyperlegible' : 'Fredoka' }}>
                             {progress.word}
                           </span>
@@ -241,10 +246,10 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <td className="py-3.5 px-2">
                         <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full capitalize ${
                           wordData?.level === 'easy'
-                            ? 'bg-green-100 text-green-800'
+                            ? 'bg-green-950 text-green-400 border border-green-800/30'
                             : wordData?.level === 'medium'
-                            ? 'bg-amber-100 text-amber-800'
-                            : 'bg-red-100 text-red-800'
+                            ? 'bg-amber-950 text-amber-400 border border-amber-800/30'
+                            : 'bg-rose-950 text-rose-400 border border-rose-800/30'
                         }`}>
                           {wordData?.level || 'easy'}
                         </span>
@@ -254,10 +259,10 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <td className="py-3.5 px-2">
                         <span className={`text-xs font-bold ${
                           isPerfect
-                            ? 'text-emerald-600'
+                            ? 'text-emerald-400'
                             : isClose
-                            ? 'text-orange-500'
-                            : 'text-blue-500'
+                            ? 'text-orange-400'
+                            : 'text-blue-400'
                         }`}>
                           {isPerfect ? 'Perfect! 🌟' : isClose ? 'So Close 💖' : 'Good Try 👍'}
                         </span>
@@ -270,7 +275,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                             <Star key={i} size={14} fill="currentColor" />
                           ))}
                           {Array.from({ length: 3 - progress.starsEarned }).map((_, i) => (
-                            <Star key={i} size={14} className="text-gray-200" />
+                            <Star key={i} size={14} className="text-slate-800" />
                           ))}
                         </div>
                       </td>
@@ -279,7 +284,7 @@ export const ProgressView: React.FC<ProgressViewProps> = ({
                       <td className="py-3.5 pl-2 text-right">
                         <button
                           onClick={() => onSelectWord(progress.wordId)}
-                          className="p-1.5 rounded-xl hover:bg-indigo-100 text-indigo-600 hover:text-indigo-800 transition-all cursor-pointer"
+                          className="p-1.5 rounded-xl text-amber-400 hover:text-amber-300 hover:bg-slate-800 transition-all cursor-pointer"
                           title="Practice this word again!"
                           id={`retry-word-btn-${progress.wordId}`}
                         >

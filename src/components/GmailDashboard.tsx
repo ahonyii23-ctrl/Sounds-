@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { UserStats, WordProgress, SpellingWord, UserSettings } from '../types';
-import { TINT_PRESETS } from '../data';
 import { 
   googleSignIn, 
   initAuth, 
   logout, 
   sendProgressEmail, 
   fetchSpellingListsFromGmail,
-  auth
 } from '../utils/googleAuth';
 import { Mail, CheckCircle2, AlertCircle, RefreshCw, LogOut, Send, Download, Sparkles, ShieldCheck } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -22,12 +20,9 @@ interface GmailDashboardProps {
 export const GmailDashboard: React.FC<GmailDashboardProps> = ({
   stats,
   progressList,
-  settings,
   onWordsImported
 }) => {
-  const activeTint = TINT_PRESETS[settings.tint];
   const [user, setUser] = useState<any>(null);
-  const [token, setToken] = useState<string | null>(null);
   const [needsAuth, setNeedsAuth] = useState<boolean>(true);
   const [isLoggingIn, setIsLoggingIn] = useState<boolean>(false);
 
@@ -41,11 +36,9 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
   const [importStatus, setImportStatus] = useState<{ success?: boolean; message?: string; count?: number } | null>(null);
 
   useEffect(() => {
-    // Listen for auth state on load
     const unsubscribe = initAuth(
-      (currentUser, accessToken) => {
+      (currentUser) => {
         setUser(currentUser);
-        setToken(accessToken);
         setNeedsAuth(false);
         if (currentUser.email) {
           setRecipientEmail(currentUser.email); // Default to user's own email for convenience
@@ -53,7 +46,6 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
       },
       () => {
         setUser(null);
-        setToken(null);
         setNeedsAuth(true);
       }
     );
@@ -70,7 +62,6 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
       const result = await googleSignIn();
       if (result) {
         setUser(result.user);
-        setToken(result.accessToken);
         setNeedsAuth(false);
         if (result.user.email) {
           setRecipientEmail(result.user.email);
@@ -87,7 +78,6 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
     try {
       await logout();
       setUser(null);
-      setToken(null);
       setNeedsAuth(true);
       setEmailStatus(null);
       setImportStatus(null);
@@ -100,7 +90,6 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
     e.preventDefault();
     if (!recipientEmail || isSending) return;
 
-    // Explicit confirmation dialog for sending emails on behalf of the user
     const confirmed = window.confirm(
       `Send spelling progress report to ${recipientEmail} via your Gmail account?`
     );
@@ -155,17 +144,17 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
   };
 
   return (
-    <div className={`p-6 rounded-3xl border-2 shadow-md transition-all duration-300 bg-white ${activeTint.textClass} border-gray-150`}>
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-gray-100 pb-5 mb-6">
+    <div className="p-6 rounded-3xl border-2 shadow-xl transition-all duration-300 bg-slate-900 border-slate-700/80 text-slate-100">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-slate-850 pb-5 mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-2.5 bg-red-100 text-red-600 rounded-2xl">
+          <div className="p-2.5 bg-slate-950 text-amber-500 border border-slate-800 rounded-2xl">
             <Mail size={24} />
           </div>
           <div>
-            <h3 className="text-lg font-extrabold font-fredoka flex items-center gap-1.5">
+            <h3 className="text-lg font-black font-fredoka flex items-center gap-1.5">
               Parent & Teacher Gmail Hub
             </h3>
-            <p className="text-xs text-gray-500 leading-snug">
+            <p className="text-xs text-slate-400 leading-snug">
               Connect Gmail to share spelling certificates and import custom worksheets!
             </p>
           </div>
@@ -174,7 +163,7 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
         {!needsAuth && user && (
           <button
             onClick={handleLogout}
-            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-200 hover:border-red-200 hover:bg-red-50 text-xs font-bold text-gray-500 hover:text-red-700 rounded-xl transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 border border-slate-800 hover:border-rose-500/40 hover:bg-rose-950/25 text-xs font-bold text-slate-400 hover:text-rose-400 rounded-xl transition-all cursor-pointer"
             id="gmail-hub-btn-signout"
           >
             <LogOut size={13} />
@@ -192,13 +181,13 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
             exit={{ opacity: 0 }}
             className="flex flex-col items-center text-center py-6 space-y-4"
           >
-            <div className="p-3 bg-red-50 text-red-500 rounded-full">
+            <div className="p-3 bg-slate-950 text-amber-500 border border-slate-800 rounded-full">
               <Mail size={32} />
             </div>
             <div className="max-w-md space-y-1.5">
-              <p className="text-sm font-bold">Connect Your Google Account</p>
-              <p className="text-xs text-gray-500 leading-relaxed">
-                Sound Bridges spelling board integrates with Gmail to let you securely email progress updates, stars, and unlock custom word worksheets emailed by parents or teachers.
+              <p className="text-sm font-bold text-slate-200">Connect Your Google Account</p>
+              <p className="text-xs text-slate-400 leading-relaxed">
+                STEELWORLDS integrates with Gmail to let you securely email progress updates, stars, and unlock custom word worksheets emailed by parents or teachers.
               </p>
             </div>
 
@@ -206,13 +195,13 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
             <button
               onClick={handleLogin}
               disabled={isLoggingIn}
-              className={`flex items-center gap-3 px-5 py-3 border border-gray-300 rounded-2xl font-semibold shadow-sm text-sm bg-white hover:bg-gray-50 active:scale-98 transition-all cursor-pointer ${
+              className={`flex items-center gap-3 px-5 py-3 border border-slate-800 rounded-2xl font-semibold shadow-sm text-sm bg-slate-950 hover:bg-slate-850 text-slate-200 active:scale-98 transition-all cursor-pointer ${
                 isLoggingIn ? 'opacity-60 cursor-not-allowed' : ''
               }`}
               id="gmail-hub-btn-signin"
             >
               {isLoggingIn ? (
-                <RefreshCw size={18} className="animate-spin text-gray-500" />
+                <RefreshCw size={18} className="animate-spin text-slate-400" />
               ) : (
                 <svg className="w-5 h-5 shrink-0" viewBox="0 0 48 48">
                   <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
@@ -224,7 +213,7 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
               <span>{isLoggingIn ? 'Connecting...' : 'Sign in with Google'}</span>
             </button>
             
-            <div className="flex items-center gap-1 text-[10px] text-gray-400 font-bold justify-center pt-2">
+            <div className="flex items-center gap-1 text-[10px] text-slate-500 font-bold justify-center pt-2">
               <ShieldCheck size={12} className="text-emerald-500" />
               <span>Secure Connection • Tokens Cached in Memory Only</span>
             </div>
@@ -238,20 +227,20 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
             className="space-y-6 animate-fadeIn"
           >
             {/* User details summary */}
-            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-2xl border border-gray-150">
+            <div className="flex items-center gap-3 p-3 bg-slate-950 rounded-2xl border border-slate-850 text-slate-200">
               {user.photoURL ? (
-                <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full border border-gray-300" referrerPolicy="no-referrer" />
+                <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full border border-slate-800" referrerPolicy="no-referrer" />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-red-100 text-red-600 font-bold flex items-center justify-center">
+                <div className="w-10 h-10 rounded-full bg-slate-800 text-amber-400 font-bold flex items-center justify-center border border-slate-700">
                   {user.displayName ? user.displayName[0] : 'U'}
                 </div>
               )}
               <div>
-                <p className="text-xs font-bold text-gray-800">{user.displayName || 'Parent/Teacher'}</p>
-                <p className="text-[11px] text-gray-500 font-medium">{user.email}</p>
+                <p className="text-xs font-bold text-slate-100">{user.displayName || 'Parent/Teacher'}</p>
+                <p className="text-[11px] text-slate-400 font-medium">{user.email}</p>
               </div>
               <div className="ml-auto">
-                <span className="text-[10px] font-extrabold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full uppercase">
+                <span className="text-[10px] font-extrabold text-emerald-400 bg-emerald-950 px-2 py-0.5 rounded-full uppercase border border-emerald-800/30">
                   Connected
                 </span>
               </div>
@@ -260,16 +249,16 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
             {/* Split layout for actions */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
               {/* Action 1: Send Spelling Certificate Email */}
-              <div className="space-y-3 p-4 border border-gray-100 bg-gray-50/40 rounded-2xl">
-                <h4 className="text-sm font-black font-fredoka text-gray-800 flex items-center gap-1.5">
+              <div className="space-y-3 p-4 border border-slate-850 bg-slate-950/40 rounded-2xl">
+                <h4 className="text-sm font-black font-fredoka text-slate-200 flex items-center gap-1.5">
                   <span className="text-base">🏆</span> Send Achievement Certificate
                 </h4>
-                <p className="text-[11px] text-gray-500 leading-relaxed">
+                <p className="text-[11px] text-slate-400 leading-relaxed">
                   Compose and send a beautiful spelling progress report summary directly to any email address via your Gmail!
                 </p>
 
                 <form onSubmit={handleSendEmail} className="space-y-2 pt-2">
-                  <label className="block text-[10px] font-extrabold text-gray-400 uppercase tracking-wider">Recipient Email</label>
+                  <label className="block text-[10px] font-extrabold text-slate-500 uppercase tracking-wider">Recipient Email</label>
                   <div className="flex gap-2">
                     <input
                       type="email"
@@ -277,13 +266,13 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                       value={recipientEmail}
                       onChange={(e) => setRecipientEmail(e.target.value)}
                       placeholder="parent-or-teacher@email.com"
-                      className="flex-1 p-2 bg-white border border-gray-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-100 font-medium text-gray-700"
+                      className="flex-1 p-2 bg-slate-950 border border-slate-800 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-amber-500/20 focus:border-amber-500 font-medium text-slate-200"
                       id="gmail-recipient-input"
                     />
                     <button
                       type="submit"
                       disabled={isSending || progressList.length === 0}
-                      className={`px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer transition-all ${
+                      className={`px-3 py-2 bg-slate-800 hover:bg-slate-750 text-slate-200 rounded-xl text-xs font-bold flex items-center gap-1 cursor-pointer transition-all border border-slate-700 ${
                         (isSending || progressList.length === 0) ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
                       id="gmail-send-certificate-btn"
@@ -293,7 +282,7 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                     </button>
                   </div>
                   {progressList.length === 0 && (
-                    <span className="text-[10px] text-amber-600 font-bold block">
+                    <span className="text-[10px] text-amber-500 font-bold block">
                       ⚠️ Practice at least 1 word first to unlock reports.
                     </span>
                   )}
@@ -302,20 +291,20 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                 {/* Email Sending Result */}
                 {emailStatus && (
                   <div className={`p-3 rounded-xl flex items-start gap-2 text-xs ${
-                    emailStatus.success ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-red-50 text-red-800 border border-red-200'
+                    emailStatus.success ? 'bg-emerald-950/40 text-emerald-200 border border-emerald-900' : 'bg-rose-950/40 text-rose-200 border border-rose-900'
                   }`}>
-                    {emailStatus.success ? <CheckCircle2 size={15} className="shrink-0 text-emerald-500 mt-0.5" /> : <AlertCircle size={15} className="shrink-0 text-red-500 mt-0.5" />}
+                    {emailStatus.success ? <CheckCircle2 size={15} className="shrink-0 text-emerald-400 mt-0.5" /> : <AlertCircle size={15} className="shrink-0 text-rose-400 mt-0.5" />}
                     <span>{emailStatus.message}</span>
                   </div>
                 )}
               </div>
 
               {/* Action 2: Import Word worksheets from Gmail */}
-              <div className="space-y-3 p-4 border border-gray-100 bg-gray-50/40 rounded-2xl">
-                <h4 className="text-sm font-black font-fredoka text-gray-800 flex items-center gap-1.5">
+              <div className="space-y-3 p-4 border border-slate-850 bg-slate-950/40 rounded-2xl">
+                <h4 className="text-sm font-black font-fredoka text-slate-200 flex items-center gap-1.5">
                   <span className="text-base">📩</span> Import Gmail Word Lists
                 </h4>
-                <p className="text-[11px] text-gray-500 leading-relaxed">
+                <p className="text-[11px] text-slate-400 leading-relaxed">
                   Teachers or parents can email lists of custom spelling words to this mailbox and import them onto the board.
                 </p>
 
@@ -323,7 +312,7 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                   <button
                     onClick={handleImportWords}
                     disabled={isImporting}
-                    className={`w-full py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm active:scale-98 transition-all ${
+                    className={`w-full py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-sm active:scale-98 transition-all ${
                       isImporting ? 'opacity-50 cursor-not-allowed' : ''
                     }`}
                     id="gmail-import-words-btn"
@@ -336,9 +325,9 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                 {/* Import Status Display */}
                 {importStatus && (
                   <div className={`p-3 rounded-xl flex items-start gap-2 text-xs ${
-                    importStatus.success ? 'bg-indigo-50 text-indigo-800 border border-indigo-200' : 'bg-amber-50 text-amber-800 border border-amber-200'
+                    importStatus.success ? 'bg-amber-950/40 text-amber-200 border border-amber-800/30' : 'bg-rose-950/40 text-rose-200 border border-rose-900'
                   }`}>
-                    {importStatus.success ? <CheckCircle2 size={15} className="shrink-0 text-indigo-500 mt-0.5" /> : <AlertCircle size={15} className="shrink-0 text-amber-500 mt-0.5" />}
+                    {importStatus.success ? <CheckCircle2 size={15} className="shrink-0 text-amber-400 mt-0.5" /> : <AlertCircle size={15} className="shrink-0 text-rose-400 mt-0.5" />}
                     <div className="leading-snug">
                       <span className="block font-bold">{importStatus.success ? 'Success!' : 'No Lists Found'}</span>
                       <span className="text-[11px] opacity-90">{importStatus.message}</span>
@@ -347,8 +336,8 @@ export const GmailDashboard: React.FC<GmailDashboardProps> = ({
                 )}
 
                 {/* Quick Info Box */}
-                <div className="p-2.5 bg-yellow-50/60 border border-yellow-100 rounded-xl text-[10px] text-yellow-800 leading-relaxed">
-                  <p className="font-bold mb-0.5">💡 How to import custom words:</p>
+                <div className="p-2.5 bg-amber-950/20 border border-amber-800/30 rounded-xl text-[10px] text-amber-200 leading-relaxed">
+                  <p className="font-bold mb-0.5 text-amber-400">💡 How to import custom words:</p>
                   <p>Send an email with subject <strong>"Sound Bridges Spelling List"</strong> containing your custom words as comma-separated text (e.g. <i>balloon, rocket, bubble</i>), then click Scan above!</p>
                 </div>
               </div>

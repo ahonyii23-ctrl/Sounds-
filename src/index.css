@@ -1,10 +1,48 @@
 @import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka:wght@300..700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/opendyslexic@1.0.3/opendyslexic.css');
 @import "tailwindcss";
 
 @theme {
   --font-lexend: "Lexend", sans-serif;
   --font-atkinson: "Atkinson Hyperlegible", sans-serif;
   --font-fredoka: "Fredoka", sans-serif;
+  --font-dyslexic: "OpenDyslexic", sans-serif;
+
+  /* Dark Forge Color Palette */
+  --color-gunmetal: #1E1E24;
+  --color-forged-orange: #FF7A00;
+  --color-ember-yellow: #FFC857;
+  --color-cream: #F2E9E4;
+  --color-steel-teal: #4B8F8C;
+
+  /* Standard Tailwind color mappings to easily rebrand everything */
+  --color-slate-950: #1E1E24;      /* Gunmetal BG */
+  --color-slate-900: #292930;      /* Card Gunmetal */
+  --color-slate-850: #3A3A45;      /* Secondary dark divider */
+  --color-slate-800: #42424F;      /* Dark hover */
+  --color-slate-750: #4E4E5C;      /* Mid dark panel */
+  --color-slate-700: #4B8F8C40;   /* Steel Teal border (semi-transparent) */
+  --color-slate-600: #4B8F8C;      /* Steel Teal solid */
+
+  /* Primary Action: Forged Orange */
+  --color-amber-500: #FF7A00;      /* Forged Orange */
+  --color-amber-400: #FFA24D;      /* Lighter Forged Orange */
+  --color-orange-500: #FF7A00;     /* Forged Orange standard */
+  --color-orange-400: #FFA24D;     /* Lighter Forged Orange */
+
+  /* Reward / Win: Ember Yellow */
+  --color-yellow-400: #FFC857;     /* Ember Yellow */
+  --color-yellow-500: #FFC857;     /* Ember Yellow */
+
+  /* Text / Letters: Cream */
+  --color-slate-100: #F2E9E4;      /* Cream */
+  --color-slate-200: #E3D5CD;      /* Muted Cream */
+  --color-slate-300: #D4C1B6;      /* Deep Muted Cream */
+
+  /* Secondary / Calm: Steel Teal */
+  --color-slate-400: #4B8F8C;      /* Steel Teal */
+  --color-blue-400: #4B8F8C;       /* Steel Teal secondary */
+  --color-blue-500: #4B8F8C;       /* Steel Teal secondary */
 }
 
 /* Custom background animations and extra styles */
